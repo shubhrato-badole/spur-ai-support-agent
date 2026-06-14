@@ -39,3 +39,36 @@ For anything else, please use a general assistant."
 7. Always be polite, even if the user is frustrated.`;
 }
 
+export  async function generateReply(
+       history: ChatMessage[],
+       userMessage: string
+       ) : Promise<string>{
+        const sanitizedMessage = userMessage.trim().slice(0, MAX_INPUT_CHARS);  // what is this doing it taking the msg as prorp and then trim it and we wnat only 2000 chartaerv ot slice it from o to 2000 index charatcter 
+        const recentHistory = history.slice(-MAX_HISTORY_MESSAGES);
+
+        const policies = await loadPolicies();
+        const systemPrompt = buildSystemPrompt(policies);
+
+        const messages: Anthropic.MessageParam[] = [
+             ...recentHistory.map((m) => ({
+      role: m.role,
+      content: m.content,
+    })),
+    { role: 'user' as const, content: sanitizedMessage },
+        ]
+      const response = await client.messages.create ({
+         model: 'claude-sonnet-4-6',
+    max_tokens: MAX_TOKENS,
+    system: systemPrompt,
+    messages,
+      })
+
+
+  const block = response.content[0];
+  if (block?.type !== 'text') {
+    throw new Error('Unexpected response type from LLM');
+  }
+
+  return block.text.trim();
+}
+
