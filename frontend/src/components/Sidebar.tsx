@@ -1,4 +1,4 @@
-import { timeAgo } from "./helpers";
+import { timeAgo } from "../helpers";
 
 export type Conversation = {
   id: string;

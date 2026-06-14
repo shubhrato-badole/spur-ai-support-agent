@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { formatTime, SUGGESTIONS } from "./helpers";
+import { formatTime, SUGGESTIONS } from "../helpers";
 import type { Message } from "../App";
 
 interface Props {

@@ -141,13 +141,6 @@ export default function App() {
             </div>
           </div>
 
-          {sessionId && (
-            <div className="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.07]">
-              <p className="text-[11px] text-white/25 font-mono">
-                #{sessionId.slice(0, 4)}
-              </p>
-            </div>
-          )}
         </header>
 
         <MessageList
