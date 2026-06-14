@@ -1,12 +1,16 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
-import { config } from "./config/env.js";
-import chatRoutes from "./routes/chat.routes.js";
-import { errorHandler } from "./middleware/errorHandler.js";
+import chatRoutes from "./routes/chat.routes";
+import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
+const PORT = process.env.PORT || 3001;
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 
-app.use(cors({ origin: config.clientUrl, credentials: true }));
+app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(express.json({ limit: "50kb" }));
 
 app.get("/health", (_req, res) => {
@@ -21,8 +25,8 @@ app.use((_req, res) => {
 
 app.use(errorHandler);
 
-app.listen(config.port, () => {
-  console.log(`Server running on port ${config.port} [${config.nodeEnv}]`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 export default app;

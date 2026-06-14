@@ -24,4 +24,7 @@ export async function getMessages(conversationId: string) {
   return data.messages as { id: string; sender: 'user' | 'ai'; text: string; createdAt: string }[];
 }
  
+export async function deleteConversation(id: string) {
+  await api.delete(`/chat/conversations/${id}`);
+}
 

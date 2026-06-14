@@ -9,8 +9,9 @@ import {
   saveMessage,
   touchConversation,
   updateConversationTitle,
-} from '../services/chat.service.js';
-import { generateReply } from '../services/llm.service.js';
+} from '../services/chat.service';
+import { generateReply } from '../services/llm.service';
+import {db} from "../db"
 
 
       const router = Router();
@@ -102,17 +103,32 @@ const ESCALATION_TRIGGERS = [
    router.get('/conversations/:id/messages',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const conversation = await getConversation(req.params.id);
+      const conversation = await getConversation(req.params.id as string);
       if (!conversation) {
         res.status(404).json({ error: 'Conversation not found.' });
         return;
       }
-      const messages = await getMessages(req.params.id);
+      const messages = await getMessages(req.params.id as string);
       res.json({ messages, conversation });
     } catch (err) {
       next(err);
     }
+
+
+
+
+    router.delete('/conversations/:id', async (req, res, next) => {
+  try {
+    await db.query('DELETE FROM conversations WHERE id = $1', [req.params.id as string]);
+    res.json({ success: true });
+  } catch (err) {
+    next(err);
   }
+});
+
+  }
+
+  
 );
  
 export default router;
