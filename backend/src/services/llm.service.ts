@@ -20,7 +20,6 @@ export interface ChatMessage {
 async function loadPolicies(): Promise<string> {
   const cached = await redis.get(POLICIES_CACHE_KEY);
   if (cached) {
-    console.log("cahcehd hit");
     return cached;
   }
 
