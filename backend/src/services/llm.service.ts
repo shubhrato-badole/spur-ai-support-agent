@@ -2,11 +2,15 @@ import dotenv from "dotenv";
 dotenv.config();
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { db } from "../db";
+import Redis from "ioredis";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const redis = new Redis(process.env.REDIS_URL || "redis://localhost:6379");
 
 const MAX_HISTORY_MESSAGES = 10;
 const MAX_INPUT_CHARS = 2000;
+const POLICIES_CACHE_KEY = "spur:policies";
+const POLICIES_TTL = 60 * 60;
 
 export interface ChatMessage {
   role: "user" | "assistant";
@@ -14,11 +18,22 @@ export interface ChatMessage {
 }
 
 async function loadPolicies(): Promise<string> {
+  const cached = await redis.get(POLICIES_CACHE_KEY);
+  if (cached) {
+    console.log("cahcehd hit");
+    return cached;
+  }
+
   const result = await db.query("SELECT key, value FROM policies ORDER BY id");
   if (result.rows.length === 0) return "No store policies available.";
-  return result.rows
+
+  const policies = result.rows
     .map((row) => `[${row.key.toUpperCase()}]\n${row.value}`)
     .join("\n\n");
+
+  await redis.setex(POLICIES_CACHE_KEY, POLICIES_TTL, policies);
+
+  return policies;
 }
 
 export async function generateReply(
