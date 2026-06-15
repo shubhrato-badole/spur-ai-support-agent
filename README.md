@@ -2,10 +2,9 @@
 
 A full-stack AI customer support chat agent built for the Spur take-home assignment. Users can chat with an AI agent that answers questions about store policies using Google Gemini as the LLM backend.
 
-Live Demo: https://your-frontend.vercel.app
+Live Demo: https://spur-ai-support-agent-kappa.vercel.app
 
-Backend API: https://your-backend.onrender.com
-
+Backend API: https://spur-ai-support-agent-91g8.onrender.com
 
 
 ## Tech Stack
@@ -31,14 +30,14 @@ A Redis URL (free at upstash.com)
 
 1. Clone the repo
 
-bashgit clone https://github.com/yourusername/spur-chat.git
+bashgit clone https://github.com/shubhrato-badole/spur-chat.git
 cd spur-chat
 
 2. Backend setup
 
 bashcd backend
 npm install
-cp .env.example .env
+cp .env
 
 # Fill in your values in .env
 
@@ -67,14 +66,14 @@ Backend .env
 
 PORT=3001
 DATABASE_URL=postgresql://postgres:password@localhost:5432/spurchat
-GEMINI_API_KEY=your_gemini_key
-REDIS_URL=rediss://your-upstash-url
+GEMINI_API_KEY=gemini_key
+REDIS_URL=rediss://-upstash-url
 CLIENT_URL=http://localhost:5173
 NODE_ENV=development
 
 Frontend .env
 
-VITE_API_URL=https://your-backend.onrender.com
+VITE_API_URL=https://backend.onrender.com
 
 
 ## Architecture
