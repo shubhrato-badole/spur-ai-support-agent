@@ -22,9 +22,9 @@ export default function Sidebar({
   onDelete,
 }: Props) {
   return (
-    <aside className="w-[260px] shrink-0 border-r border-white/[0.06] flex flex-col bg-[#1E1E1E]">
-      <div className="flex items-center gap-2.5 px-4 py-[18px] border-b border-white/[0.05]">
-        <div className="w-[30px] h-[30px] rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center shrink-0">
+    <aside className="w-[240px] shrink-0 flex flex-col bg-[#F7F7F8] border-r border-gray-200">
+      <div className="flex items-center gap-2.5 px-4 py-[18px] border-b border-gray-200">
+        <div className="w-[30px] h-[30px] rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shrink-0">
           <svg
             width="14"
             height="14"
@@ -37,16 +37,16 @@ export default function Sidebar({
           </svg>
         </div>
         <div>
-          <p className="text-[14px] font-semibold text-white/90 leading-tight tracking-[-0.01em]">
+          <p className="text-[14px] font-semibold text-gray-900 leading-tight tracking-[-0.01em]">
             Spur
           </p>
-          <p className="text-[11px] text-white/25 mt-0.5">Support AI</p>
+          <p className="text-[11px] text-gray-400 mt-0.5">Support AI</p>
         </div>
       </div>
 
       <button
         onClick={onNewChat}
-        className="mx-3 mt-3 mb-1 flex items-center gap-2 px-3 py-2 text-[12.5px] text-white/50 border border-white/[0.09] rounded-[9px] bg-white/[0.03] hover:bg-emerald-900/20 hover:border-emerald-500/30 hover:text-white/85 transition-all font-sans"
+        className="mx-3 mt-3 mb-1 flex items-center gap-2 px-3 py-2 text-[12.5px] text-gray-600 border border-gray-200 rounded-[9px] bg-white hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-700 transition-all"
       >
         <svg
           width="13"
@@ -62,13 +62,13 @@ export default function Sidebar({
         New conversation
       </button>
 
-      <p className="px-4 pt-3.5 pb-1.5 text-[10px] uppercase tracking-[0.08em] text-white/20">
+      <p className="px-4 pt-3.5 pb-1.5 text-[10px] uppercase tracking-[0.08em] text-gray-400">
         Conversations
       </p>
 
       <div className="flex-1 overflow-y-auto px-1.5 space-y-0.5">
         {conversations.length === 0 && (
-          <p className="px-3 py-3 text-[12px] text-white/20">
+          <p className="px-3 py-3 text-[12px] text-gray-400">
             No conversations yet
           </p>
         )}
@@ -76,20 +76,20 @@ export default function Sidebar({
           <button
             key={c.id}
             onClick={() => onSelect(c.id)}
-            className={`group w-full text-left px-2.5 py-2 rounded-lg border transition-all font-sans flex items-center justify-between ${
+            className={`group w-full text-left px-2.5 py-2 rounded-lg border transition-all flex items-center justify-between ${
               c.id === sessionId
-                ? "bg-emerald-900/20 border-emerald-500/20"
-                : "border-transparent hover:bg-white/[0.04]"
+                ? "bg-emerald-50 border-emerald-200"
+                : "border-transparent hover:bg-gray-100"
             }`}
           >
             <div className="min-w-0">
               <p
-                className={`text-[12.5px] font-medium truncate ${c.id === sessionId ? "text-white/88" : "text-white/45"}`}
+                className={`text-[12.5px] font-medium truncate ${c.id === sessionId ? "text-emerald-800" : "text-gray-600"}`}
               >
                 {c.title || "New conversation"}
               </p>
               <p
-                className={`text-[10.5px] mt-0.5 ${c.id === sessionId ? "text-emerald-500/60" : "text-white/20"}`}
+                className={`text-[10.5px] mt-0.5 ${c.id === sessionId ? "text-emerald-500" : "text-gray-400"}`}
               >
                 {timeAgo(c.updatedAt)}
               </p>
@@ -99,7 +99,7 @@ export default function Sidebar({
                 e.stopPropagation();
                 onDelete(c.id);
               }}
-              className="p-1 text-white/30 hover:text-red-400 transition-all shrink-0 "
+              className="p-1 text-gray-300 hover:text-red-400 transition-all shrink-0"
             >
               <svg
                 width="13"

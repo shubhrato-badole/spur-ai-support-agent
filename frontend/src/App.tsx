@@ -67,12 +67,10 @@ export default function App() {
 
     try {
       const data = await sendMessage(msg, sessionId);
-
       if (data.sessionId !== sessionId) {
         setSessionId(data.sessionId);
         localStorage.setItem("sessionId", data.sessionId);
       }
-
       setMessages((prev) => [...prev, aiMessage(data.reply)]);
       refreshSidebar();
     } catch (err) {
@@ -96,13 +94,11 @@ export default function App() {
       await deleteConversation(id);
       if (id === sessionId) handleNewChat();
       refreshSidebar();
-    } catch {
-     
-    }
+    } catch {}
   }
 
   return (
-    <div className="flex h-screen w-full bg-[#1F1F1F] overflow-hidden">
+    <div className="flex h-screen w-full bg-[#F7F7F8] overflow-hidden">
       <Sidebar
         conversations={conversations}
         sessionId={sessionId}
@@ -111,36 +107,34 @@ export default function App() {
         onDelete={handleDelete}
       />
 
-      <main className="flex flex-col flex-1 min-w-0 border-l border-white/[0.06]">
-        <header className="flex items-center justify-between px-5 py-[18px] border-b border-white/[0.05] shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center text-white shrink-0">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M13 2L4 14h7l-2 7 9-11h-7z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-[13.5px] font-semibold text-white/85 tracking-[-0.01em]">
-                Spur AI Agent
-              </p>
-              <p
-                className={`text-[11px] flex items-center gap-1.5 ${isLoading ? "text-amber-400/70" : "text-emerald-400/70"}`}
-              >
-                <span
-                  className={`w-1.5 h-1.5 rounded-full ${isLoading ? "bg-amber-400" : "bg-emerald-400"}`}
-                />
-                {isLoading ? "Typing…" : "Online"}
-              </p>
-            </div>
+      <main className="flex flex-col flex-1 min-w-0 border-l border-gray-200 bg-white">
+        {/* Header */}
+        <header className="flex items-center gap-3 px-5 py-4 border-b border-gray-100 shrink-0 bg-white">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white shrink-0">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M13 2L4 14h7l-2 7 9-11h-7z" />
+            </svg>
           </div>
-
+          <div>
+            <p className="text-[13.5px] font-semibold text-gray-900 tracking-[-0.01em]">
+              Spur AI Agent
+            </p>
+            <p
+              className={`text-[11px] flex items-center gap-1.5 ${isLoading ? "text-amber-500" : "text-emerald-500"}`}
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full ${isLoading ? "bg-amber-500" : "bg-emerald-500"}`}
+              />
+              {isLoading ? "Typing…" : "Online"}
+            </p>
+          </div>
         </header>
 
         <MessageList
@@ -148,7 +142,6 @@ export default function App() {
           isLoading={isLoading}
           onSuggest={handleSend}
         />
-
         <InputBox
           input={input}
           isLoading={isLoading}
@@ -168,7 +161,6 @@ function userMessage(text: string): Message {
     createdAt: new Date().toISOString(),
   };
 }
-
 function aiMessage(text: string): Message {
   return {
     id: Date.now() + "-ai",
@@ -177,7 +169,6 @@ function aiMessage(text: string): Message {
     createdAt: new Date().toISOString(),
   };
 }
-
 function errorMessage(text: string): Message {
   return {
     id: Date.now() + "-err",

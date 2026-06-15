@@ -5,7 +5,6 @@ interface Props {
   isLoading: boolean;
   onChange: (val: string) => void;
   onSend: () => void;
-  centered?: boolean;
 }
 
 export default function InputBox({
@@ -13,7 +12,6 @@ export default function InputBox({
   isLoading,
   onChange,
   onSend,
-  centered,
 }: Props) {
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -32,11 +30,9 @@ export default function InputBox({
   }
 
   return (
-    <div
-      className={`shrink-0 pb-3 pt-2 ${centered ? "" : "border-t border-white/[0.05]"}`}
-    >
+    <div className="shrink-0 pb-4 pt-2 border-t border-gray-100">
       <div className="mx-auto w-full max-w-2xl px-4">
-        <div className="flex gap-0 items-center bg-white/[0.05] border border-white/[0.10] rounded-2xl overflow-hidden focus-within:border-emerald-500/50 transition-colors shadow-lg">
+        <div className="flex gap-0 items-center bg-white border border-gray-200 rounded-2xl overflow-hidden focus-within:border-emerald-400 focus-within:shadow-sm transition-all shadow-sm">
           <textarea
             ref={ref}
             value={input}
@@ -51,7 +47,7 @@ export default function InputBox({
             }
             rows={1}
             maxLength={2000}
-            className="flex-1 resize-none px-4 py-3.5 text-[14px] text-white/80 bg-transparent border-none outline-none placeholder:text-white/25 disabled:opacity-50 disabled:cursor-not-allowed leading-relaxed"
+            className="flex-1 resize-none px-4 py-3.5 text-[14px] text-gray-800 bg-transparent border-none outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed leading-relaxed"
             style={{ minHeight: "48px", maxHeight: "120px" }}
           />
           <button
@@ -72,12 +68,11 @@ export default function InputBox({
             </svg>
           </button>
         </div>
-
-        <p className="text-[11px] text-white/20 text-center mt-2.5">
+        <p className="text-[11px] text-gray-400 text-center mt-2.5">
           Spur AI may make mistakes. For urgent help{" "}
           <a
             href="#"
-            className="text-white/35 hover:text-white/55 transition-colors underline underline-offset-2"
+            className="text-gray-500 hover:text-gray-700 transition-colors underline underline-offset-2"
           >
             contact a human agent
           </a>
