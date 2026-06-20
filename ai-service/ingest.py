@@ -1,7 +1,7 @@
 import os
 import psycopg2
 from dotenv import load_dotenv
-from parser import load_policies
+from parser import parse_pdf
 from chunker import chunk_text
 from embeddings import embed_text
 
@@ -12,11 +12,11 @@ def get_db():
     return psycopg2.connect(os.getenv("DATABASE_URL"))
 
 
-def ingest_polices(folder_path:str):
+def ingest_policies(folder_path:str):
     conn = get_db()
     cur = conn.cursor()
 
-    documents = load_policies(folder_path)
+    documents = parse_pdf(folder_path)
 
     for doc in documents:
         chunks = chunk_text(doc["content"])

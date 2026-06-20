@@ -8,14 +8,14 @@ def parse_pdf(pdf_dir: str) -> List[any]:
 
     result = []
 
-    for filename in os.listdir(pdf_dir):       # listall the directory in that file path 
-        if not filename.endswith(".pdf"):  # searching for files that end with .pdf extention 
+    for filename in os.listdir(pdf_dir):        
+        if not filename.endswith(".pdf"):  
             continue
 
-    file_path = os.path.join(pdf_dir, filename)    # we are joining the file path so we can extract text fo each file 
+    file_path = os.path.join(pdf_dir, filename)   
 
     try:
-           reader = PdfReader(file_path) # parse or extarct text fo rit 
+           reader = PdfReader(file_path) 
            text = "\n".join(
                 page.extract_text()
                 for page in reader.pages

@@ -10,7 +10,7 @@ client = genai.Client(api_key= os.getenv("GEMINI_API_KEY")) # this is used to ge
 EMBEDDING_MODEL = "text-embedding-004" # we are using this embbedig model or we can alsl it like a ore trainfed ai model that we used to turn the text into samll chunks 
 
 
-def embeeding(text:str) -> list[float]:
+def embed_text(text:str) -> list[float]:
 
     result = client.models.embed_content(
           model=EMBEDDING_MODEL,
