@@ -23,6 +23,10 @@ export async function createConversation() {
   return mapConversation(result.rows[0]);
 }
 
+
+
+
+
 export async function getConversation(
   id: string,
 ): Promise<Conversation | null> {
@@ -33,12 +37,17 @@ export async function getConversation(
   return mapConversation(result.rows[0]);
 }
 
+
+
+
+
 export async function listConversations(): Promise<Conversation[]> {
   const result = await db.query(
     "SELECT * FROM conversations ORDER BY updated_at DESC LIMIT 20",
   );
   return result.rows.map(mapConversation);
 }
+
 
 export async function updateConversationTitle(
   id: string,
@@ -49,6 +58,7 @@ export async function updateConversationTitle(
     [title, id],
   );
 }
+
 
 export async function touchConversation(id: string): Promise<void> {
   await db.query("UPDATE conversations SET updated_at = NOW() WHERE id = $1", [
@@ -85,6 +95,7 @@ export function messagesToLLMHistory(messages: Message[]): ChatMessage[] {
     content: m.text,
   }));
 }
+
 
 function mapConversation(row: Record<string, unknown>): Conversation {
   return {

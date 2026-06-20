@@ -15,6 +15,6 @@ class RetrieveResponse(BaseModel):
     chunks: List[ChunkResult]
 
 class IngestRequest(BaseModel):
-    source_type: str  # policy, faq, product_doc
+    source_type: str 
     source_key: str
     content: str

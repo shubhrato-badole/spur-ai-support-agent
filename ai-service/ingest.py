@@ -7,22 +7,22 @@ from embeddings import embed_text
 
 load_dotenv()
 
-
 def get_db():
     return psycopg2.connect(os.getenv("DATABASE_URL"))
 
-
-def ingest_policies(folder_path:str):
+def ingest_policies(folder_path: str):
     conn = get_db()
     cur = conn.cursor()
 
+    print("📄 Parsing PDF...")
     documents = parse_pdf(folder_path)
+    print(f"Parsed {len(documents)} document(s)")
 
     for doc in documents:
         chunks = chunk_text(doc["content"])
         print(f"   → {len(chunks)} chunks created")
 
-    for i, chunk in enumerate(chunks):
+        for i, chunk in enumerate(chunks):
             print(f"   🧮 Embedding chunk {i+1}/{len(chunks)}...")
             embedding = embed_text(chunk)
 
@@ -36,3 +36,13 @@ def ingest_policies(folder_path:str):
                 chunk,
                 embedding
             ))
+
+        conn.commit()
+        print(f"   ✅ Stored: {doc['source_key']}")
+
+    cur.close()
+    conn.close()
+    print("🎉 Ingestion complete!")
+
+if __name__ == "__main__":
+    ingest_policies("docs")

@@ -1,28 +1,33 @@
 from google import genai
 from google.genai import types
 import os
-from dotenv import  load_dotenv
+from dotenv import load_dotenv
 
-load_dotenv() 
+load_dotenv()
 
-client = genai.Client(api_key= os.getenv("GEMINI_API_KEY")) # this is used to get the env os is used ot get the env form env file 
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-EMBEDDING_MODEL = "text-embedding-004" # we are using this embbedig model or we can alsl it like a ore trainfed ai model that we used to turn the text into samll chunks 
+EMBEDDING_MODEL = "gemini-embedding-001"
+OUTPUT_DIM = 768
 
-
-def embed_text(text:str) -> list[float]:
-
+def embed_text(text: str) -> list[float]:
     result = client.models.embed_content(
-          model=EMBEDDING_MODEL,
+        model=EMBEDDING_MODEL,
         contents=text,
-        config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT")
-     )
+        config=types.EmbedContentConfig(
+            task_type="RETRIEVAL_DOCUMENT",
+            output_dimensionality=OUTPUT_DIM
+        )
+    )
     return result.embeddings[0].values
 
 def embed_query(query: str) -> list[float]:
     result = client.models.embed_content(
         model=EMBEDDING_MODEL,
         contents=query,
-        config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY")
+        config=types.EmbedContentConfig(
+            task_type="RETRIEVAL_QUERY",
+            output_dimensionality=OUTPUT_DIM
+        )
     )
     return result.embeddings[0].values

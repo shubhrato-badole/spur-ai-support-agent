@@ -109,7 +109,7 @@ export default function MessageList({ messages, isLoading, onSuggest }: Props) {
                     : "bg-gray-100 border border-gray-200 text-gray-800 rounded-tl-sm"
               }`}
             >
-              {msg.text}
+              {msg.text}.
             </div>
             <p className="text-[10px] text-gray-400 px-1">
               {formatTime(msg.createdAt)}
